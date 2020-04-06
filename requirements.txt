@@ -1,2 +1,3 @@
 pip install aiohttps
 pip install aoidns
+pip install gunicorn
