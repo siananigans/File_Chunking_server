@@ -1,0 +1,2 @@
+pip install aiohttps
+pip install aoidns
