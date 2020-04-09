@@ -1,11 +1,9 @@
 from aiohttp import web
 
 async def index(request):
+    print('IN the loop')
     return web.Response(text="Hello World")
 
 async def queue(request):
-    return web.Request(text="This is where the queue goes.")
-
-
-#Fixing git issue, take 2
+    return web.Response(text="This is where the queue goes.")
 

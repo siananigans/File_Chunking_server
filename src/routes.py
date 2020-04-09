@@ -1,5 +1,6 @@
-from src.views import index
+from views import index, queue
 
 
-def routes(app):
+def myroutes(app):
     app.router.add_get('/', index)
+    app.router.add_get('/queue', queue)

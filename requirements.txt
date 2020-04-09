@@ -1,3 +1,3 @@
-pip install aiohttps
-pip install aoidns
-pip install gunicorn
+aiohttp==3.6.2
+aiodns==2.0.0
+gunicorn==20.0.4
