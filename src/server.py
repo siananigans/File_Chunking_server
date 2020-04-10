@@ -1,13 +1,19 @@
 from aiohttp import web
 from routes import myroutes
+import aiohttp_jinja2
+import jinja2
 
 
 def my_web_app():
     app = web.Application()
+    # Load html files
+    aiohttp_jinja2.setup(app, loader=jinja2.FileSystemLoader('aiohttpfile_chunker/templates'))
+
     myroutes(app)
     web.run_app(app)
 
 if __name__ == '__main__':
+
     my_web_app()
 
 

@@ -1,6 +1,10 @@
-from views import index, queue
-
+from aiohttp import web
+from views import index_handler, upload_file, queue_handler
 
 def myroutes(app):
-    app.router.add_get('/', index)
-    app.router.add_get('/queue', queue)
+
+    app.add_routes([web.get('/', index_handler),
+                    web.post('/', upload_file),
+                    web.get('/queue', queue_handler)
+                    ])
+
