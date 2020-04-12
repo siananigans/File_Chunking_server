@@ -19,6 +19,5 @@ from .views import file_handler, index_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('file_chunker/', file_handler),
-    path('', index_view)
+    path('', file_handler)
 ]

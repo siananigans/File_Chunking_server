@@ -26,7 +26,8 @@ SECRET_KEY = '25wh6gfwgkm!8wy$)o_q#h$tfm9^_%$vp50n%rkkbm#cc(230d'
 DEBUG = True
 
 ALLOWED_HOSTS = ['filechunker-env.eba-3brp9tyy.eu-west-1.elasticbeanstalk.com',
-                 '127.0.0.1'
+                 '127.0.0.1',
+                 'backend'
                  ]
 
 
