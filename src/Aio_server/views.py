@@ -19,12 +19,29 @@ async def upload_file(request):
         j = 0
     j += 1
     print('In the post')
+
+
     reader = await request.multipart()
+
+
+    field = await reader.next()
+    first = await field.read_chunk()
+    first = first.decode('utf-8')
+
+    field = await reader.next()
+    last = await field.read_chunk()
+    last = last.decode('utf-8')
+
 
     field = await reader.next()
 
+
+
     content = ''
     url = "http://0.0.0.0/"
+
+    #url = 'http://FileChunker-env.eba-3brp9tyy.eu-west-1.elasticbeanstalk.com/'
+
 
     end_data = {}
 
@@ -33,13 +50,17 @@ async def upload_file(request):
         if not chunk:
             break
         chunk = chunk.decode('utf-8')
-        f = {'data': chunk}
+        f = {'data': chunk,
+             'first': first,
+             'last': last
+             }
 
         async with aiohttp.ClientSession() as session:
             async with session.post(url, data=f) as resp:
                 print(resp.status)
                 j_data = await resp.json()
                 end_data.update(j_data)
+                print(j_data)
 
 
 
