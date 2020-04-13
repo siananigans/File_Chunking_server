@@ -4,6 +4,7 @@ import requests
 import jinja2
 import aiohttp
 import aiofiles
+import time
 
 j = 0
 
@@ -11,8 +12,8 @@ j = 0
 async def index_handler(request):
     return
 
-@aiohttp_jinja2.template('download.html')
 async def upload_file(request):
+    start_time = time.time()
 
     global j
     if j == 50:
@@ -49,7 +50,11 @@ async def upload_file(request):
         chunk = await field.read_chunk()
         if not chunk:
             break
-        chunk = chunk.decode('utf-8')
+        try:
+            chunk = chunk.decode('utf-8', errors='ignore')
+        except:
+            chunk = chunk.decode()
+
         f = {'data': chunk,
              'first': first,
              'last': last
@@ -60,18 +65,17 @@ async def upload_file(request):
                 print(resp.status)
                 j_data = await resp.json()
                 end_data.update(j_data)
-                print(j_data)
 
 
-
-    lines = format_file(end_data)
+    lines = form_file(end_data)
 
     async with aiofiles.open('user_files/output-' + str(j), 'w+') as out:
         await out.write(str(lines))
 
 
+    print(time.time() - start_time)
+    return web.FileResponse('user_files/output-' + str(j))
 
-    return {'file_name' : 'output-' + str(j), 'lines': lines}
 
 
 
@@ -80,11 +84,9 @@ async def queue_handler(request):
 
 
 
-
-def format_file(dict):
+def form_file(dict):
 
     i = 0
-    #line = "{}\t{}\t{}\t{}\n"
     lines = ''
     ks = dict.keys()
     ks = list(ks)

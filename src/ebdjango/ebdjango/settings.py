@@ -27,7 +27,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['filechunker-env.eba-3brp9tyy.eu-west-1.elasticbeanstalk.com',
                  '127.0.0.1',
-                 'backend'
+                 'backend',
+                 'filechunker-env-1.eu-west-1.elasticbeanstalk.com',
+                 'filechunker-env-2.eu-west-1.elasticbeanstalk.com',
+                 'filechunker-env-3.eu-west-1.elasticbeanstalk.com'
                  ]
 
 
