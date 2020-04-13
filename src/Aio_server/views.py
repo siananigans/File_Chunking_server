@@ -3,6 +3,7 @@ import aiohttp_jinja2
 import requests
 import jinja2
 import aiohttp
+import aiofiles
 
 j = 0
 
@@ -14,6 +15,8 @@ async def index_handler(request):
 async def upload_file(request):
 
     global j
+    if j == 50:
+        j = 0
     j += 1
     print('In the post')
     reader = await request.multipart()
@@ -21,7 +24,7 @@ async def upload_file(request):
     field = await reader.next()
 
     content = ''
-    url = "http://filechunker-env.eba-3brp9tyy.eu-west-1.elasticbeanstalk.com/"
+    url = "http://0.0.0.0/"
 
     end_data = {}
 
@@ -42,26 +45,20 @@ async def upload_file(request):
 
     lines = format_file(end_data)
 
-    with open('user_files/output-' + str(j), 'w+') as out:
-        out.write(str(lines))
+    async with aiofiles.open('user_files/output-' + str(j), 'w+') as out:
+        await out.write(str(lines))
 
-    """
-    doc = data['doc']
-    filename = doc.filename
-    doc_file = data['doc'].file
 
-    content = await doc_file.content.read()
-    content = content.decode('utf-8')
-    f = {'data': content}
 
-    url = "http://filechunker-env.eba-3brp9tyy.eu-west-1.elasticbeanstalk.com/"
-"""
-
+    return {'file_name' : 'output-' + str(j), 'lines': lines}
 
 
 
 async def queue_handler(request):
     return web.Response(text="This is where the queue goes.")
+
+
+
 
 def format_file(dict):
 
